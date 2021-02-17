@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 const Register = () => {
     return (
         <Fragment>
-            <h2>Register</h2>
+            <h1>Register</h1>
         </Fragment>
     )
 }
