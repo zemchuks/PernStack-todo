@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config()
 // Protecting routes with Auth middleware
 module.exports = async (req, res, next) => {
     //Get the token from the header
-    const token = req.header('x-auth-token')
+    const token = req.header('token')
 
     // Check if token doesn't exist
     if(!token) {

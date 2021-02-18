@@ -29,7 +29,7 @@ router.post('/register', [
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
         
         // Check if user already exist then throw error
-        user.rows.length !== 0 ? res.status(401).send('User already exists') : ''
+        user.rows.length !== 0 ? res.status(401).json('User already exists') : ''
         // Hash the password 
         const saltRounds = 10
 
@@ -47,7 +47,7 @@ router.post('/register', [
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({ error: err}) 
+        res.status(500).json({ error: err})
     }
 })
 
@@ -73,14 +73,14 @@ router.post('/login', [
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
 
         if (user.rows.length === 0) {
-            return res.status(401).json({ msg: "Email or Password is incorrect"})
+            return res.status(401).json("Email or Password is incorrect")
         }
         
         // Check if incoming password is the same as the database pwd
         const isMatch = await bcrypt.compare(password, user.rows[0].user_password)
         // If not then,
         if(!isMatch) {
-            return res.status(401).json({ msg: 'Email or Password is incorrect'})
+            return res.status(401).json('Password is incorrect')
         }
           // Add jwttoken
           const token = jwtGenerator(user.rows[0].user_id)
