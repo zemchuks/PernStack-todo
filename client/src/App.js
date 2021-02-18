@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import Login from './components/Login'
@@ -13,6 +13,25 @@ const App = () => {
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean)
   }
+
+  useEffect(() => {
+    // check if the person is still Authenticated
+    const isAuth = async () => {
+      try {
+        const res = await fetch('/auth/verify', {
+          method: 'GET',
+          headers: { token: localStorage.token},
+        })
+        const data = await res.json()
+       // if authenticated, then
+        data === true ? setIsAuthenticated(true) : setIsAuthenticated(false)
+
+      } catch (err) {
+        console.error(err.message)
+      }
+    }
+    isAuth()
+  })
   return (
     <Fragment>
       <Router>

@@ -20,6 +20,7 @@ const Dashboard = ({ setAuth }) => {
             }
         }
         getName()
+        // eslint-disable-next-line
     }, [])
 
     // Log out 
