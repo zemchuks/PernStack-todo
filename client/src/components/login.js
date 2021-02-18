@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Login = ({ setAuth }) => {
     const [text, setText] = useState({
@@ -22,11 +23,15 @@ const Login = ({ setAuth }) => {
                 body: JSON.stringify(body)
             })
             const data = await res.json()
-        
-              // save token to local storage
-           localStorage.setItem("token", data.token)
-
-            setAuth(true)
+            if(data.token) {
+                 // save token to local storage
+                localStorage.setItem("token", data.token)
+                setAuth(true)
+                toast.success('Login Successful')
+            } else {
+                setAuth(false)
+                toast.error(data)
+            }
         } catch (err) {
             console.error(err.message)
         }

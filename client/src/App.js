@@ -1,20 +1,25 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+toast.configure()
+
 const App = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-
+ 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean)
   }
 
   useEffect(() => {
+   
     // check if the person is still Authenticated
     const isAuth = async () => {
       try {
