@@ -85,7 +85,7 @@ router.delete('/:id', async (req, res) => {
         const deleteTodo = await pool.query(
             "DELETE FROM todo WHERE todo_id = $1", [id]
         )
-        res.json("Todo was delettyed")
+        res.json("Todo was deleted")
     } catch (err) {
         console.error(err.message)
         res.status(500).json({ error: err})

@@ -1,25 +1,26 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-const Dashboard = ({ setAuth }) => {
+const Dashboard = ({ setAuth, setLoader }) => {
     const [name, setName] = useState('')
 
-    useEffect(() => {
-        const getName = async () => {
-            try {
-                const res = await fetch('/dashboard', {
-                    method: 'GET', 
-                    // Get the token in localStorage into the header
-                    headers: { token: localStorage.token }
-                })
-                const data = await res.json()
+    const getName = async () => {
+        try {
+            const res = await fetch('/dashboard', {
+                method: 'GET', 
+                // Get the token in localStorage into the header
+                headers: { token: localStorage.token }
+            })
+            const data = await res.json()
 
-                setName(data.user_name)
+            setName(data.user_name)
 
-            } catch (err) {
-                console.error(err.message)
-            }
+        } catch (err) {
+            console.error(err.message)
         }
+    }
+
+    useEffect(() => {
         getName()
         // eslint-disable-next-line
     }, [])
@@ -29,7 +30,8 @@ const Dashboard = ({ setAuth }) => {
         e.preventDefault()
         localStorage.removeItem("token")
         setAuth(false)
-        toast.success('Logged Out')
+        setLoader(false)
+        toast.success('Logging Out')
     }
 
     return (

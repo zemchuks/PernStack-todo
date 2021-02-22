@@ -29,7 +29,10 @@ router.post('/register', [
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email])
         
         // Check if user already exist then throw error
-        user.rows.length !== 0 ? res.status(401).json('User already exists') : ''
+        if (user.rows.length !== 0) {
+            return res.status(401).json('User already exists')
+        }
+        
         // Hash the password 
         const saltRounds = 10
 

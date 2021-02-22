@@ -1,11 +1,20 @@
-CREATE DATABASE jwttutorial;
+CREATE DATABASE authtodo;
 
 CREATE TABLE users(
-    user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id uuid DEFAULT uuid_generate_v4(),
     user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     user_password VARCHAR(255) NOT NULL
+    PRIMARY KEY(user_id)
 );
 
 -- // insert into users
 INSERT INTO users (user_name, user_email, user_password) VALUES('bruno', 'austin2@gmail.com', 'runtown');
+
+CREATE TABLE todos(
+    todo_id SERIAL,
+    user_id UUID,
+    description VARCHAR(255) NOT NULL,
+    PRIMARY KEY (todo_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

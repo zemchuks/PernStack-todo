@@ -12,10 +12,9 @@ app.use(cors());
 
 //Register and Login Route
 app.use('/auth', require('./routes/auth'))
-
 // Dashboard Route
 app.use('/dashboard', require('./routes/dashboard'))
-
+app.use('/todo', require('./routes/todo'))
 // root route
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to PERN todo app'})
