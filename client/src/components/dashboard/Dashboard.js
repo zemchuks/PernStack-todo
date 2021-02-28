@@ -1,6 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
+// components
+import InputTodo from '../todos/InputTodo'
+
 const Dashboard = ({ setAuth, setLoader }) => {
     const [name, setName] = useState('')
 
@@ -36,9 +39,12 @@ const Dashboard = ({ setAuth, setLoader }) => {
 
     return (
         <Fragment>
-            <h1 className='mt-5'>Dashboard</h1>
-            <p>Hello, {name}</p>
-            <button className='btn btn-primary my-3' onClick={e => logOut(e)}>Log Out</button>
+           <div className='d-flex mt-5 justify-content-around'>
+           <h2>{name} 's Todo List</h2>
+            <button className='btn btn-primary' onClick={e => logOut(e)}>Log Out</button>
+           </div>
+           
+            <InputTodo />
         </Fragment>
     )
 }

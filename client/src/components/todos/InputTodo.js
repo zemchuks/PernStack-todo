@@ -7,13 +7,22 @@ const InputTodo = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
+
+            //to add more than one headers
+            const newHeader = new Headers()
+
+            newHeader.append('Content-Type', 'application/json')
+            newHeader.append('token', localStorage.token)
+
             const body = { description }
-            const res = await fetch('/todos', {
+            const res = await fetch('/dashboard/todos', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: newHeader,
                 body: JSON.stringify(body)
             })
-            window.location = '/'
+            const data = await res.json()
+            console.log(data);
+            // window.location = '/'
         } catch (err) {
             console.error(err.message);
         }
