@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
+import Landing from './components/layout/Landing'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Spinner from './components/layout/Spinner'
@@ -52,6 +53,8 @@ const App = () => {
         <Router>
          <div className='container'>
            <Switch>
+           <Route exact path='/' render={props => !isAuthenticated ? <Landing {...props} /> : <Redirect to='/dashboard' /> } />
+
           <Route exact path='/login' render={props => !isAuthenticated ? <Login {...props} setAuth={setAuth} /> : <Redirect to='/dashboard' /> } />
 
           <Route exact path='/register' render={props => !isAuthenticated ? <Register {...props} setAuth={setAuth} /> : <Redirect to='/login' />} />
