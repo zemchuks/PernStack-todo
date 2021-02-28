@@ -12,10 +12,12 @@ const authorization = require('../middleware/authorization')
  *  @descr      Register a new User
  *  @access     Private
  */
+
 router.post('/register', [
     check('name', 'Please add a name').not().isEmpty(),
     check('email', 'Please include a valid Email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6})
+
 ], async (req, res) => {
     const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -44,7 +46,7 @@ router.post('/register', [
             "INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *", [name, email, bcryptPassword]
         )
 
-        // Add jwttoken
+        // Add jwtToken
         const token = jwtGenerator(newUser.rows[0].user_id)
         res.json({ token })
 
@@ -59,6 +61,7 @@ router.post('/register', [
  *  @descr      Login a User
  *  @access     Private
  */
+
 router.post('/login', [
     check('email', 'Please include a valid Email').isEmail(),
     check('password', 'Password is required').exists()

@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 /**
  *  @route      POST api/todos
- *  @descr      Add new todo
+ *  @descr      Create new todo
  *  @access     Private
  */
 router.post('/', async (req, res) => {
