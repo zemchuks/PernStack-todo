@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const dotenv = require('dotenv').config()
+const path = require('path')
 const app = express()
  
 app.use(morgan('dev'))
@@ -10,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors());
 
+app.use(express.static('client/build'))
 //Register and Login Route
 app.use('/auth', require('./routes/auth'))
 // Dashboard Route
@@ -20,8 +22,15 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to PERN todo app'})
 })
 
-const PORT = process.env.PORT 
+// Serve static assests in production
+if(process.env.NODE_ENV === 'production') {
+    //set static folder
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html' )))
+}
+
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
     console.log(`Live @ port ${PORT}...`)
-})
+}) 
