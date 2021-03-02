@@ -1,28 +1,23 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import EditTodo from './EditTodo'
 
-const ListTodos = () => {
+const ListTodos = ({ allTodos, setTodosChange }) => {
+
     const [todos, setTodos] = useState([])
 
     // Delete todo
     const deleteTodo = async (id) => {
-        await fetch(`/todos/${id}`,{
+        await fetch(`/dashboard/todos/${id}`,{
             method: 'DELETE',
+            headers: { token: localStorage.token }
         })
-    setTodos(todos.filter(todo => todo.todo_id !== id))
-    }
-    
-    const getTodos = async () => {
-            const res = await fetch('/todos')
-            const data = await res.json()
-            setTodos(data)
-            console.log(data);
+        setTodos(todos.filter(todo => todo.todo_id !== id))
     }
 
     useEffect(() => {
-        getTodos()
+        setTodos(allTodos)
         // eslint-disable-next-line
-    }, [])
+    }, [allTodos])
 
     return (
         <Fragment>
@@ -36,10 +31,10 @@ const ListTodos = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {todos.map(todo => (
+                    {todos.length !== 0 && todos[0].todo_id !== null && todos.map(todo => (
                         <tr key={todo.todo_id}>
                             <td>{todo.description}</td>
-                            <td><EditTodo todo={todo} /></td>
+                            <td><EditTodo todo={todo} setTodosChange={setTodosChange} /></td>
                             <td><button className='btn btn-danger' onClick={() => deleteTodo(todo.todo_id)}>Delete</button></td>
                         </tr>
                     ))}

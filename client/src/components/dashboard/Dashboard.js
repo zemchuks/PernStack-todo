@@ -3,9 +3,12 @@ import { toast } from 'react-toastify'
 
 // components
 import InputTodo from '../todos/InputTodo'
+import ListTodos from '../todos/ListTodos'
 
 const Dashboard = ({ setAuth, setLoader }) => {
     const [name, setName] = useState('')
+    const [allTodos, setAllTodos] = useState([])
+    const [todosChange, setTodosChange] = useState(false)
 
     const getName = async () => {
         try {
@@ -15,8 +18,8 @@ const Dashboard = ({ setAuth, setLoader }) => {
                 headers: { token: localStorage.token }
             })
             const data = await res.json()
-
-            setName(data.user_name)
+            setAllTodos(data)
+            setName(data[0].user_name)
 
         } catch (err) {
             console.error(err.message)
@@ -25,8 +28,9 @@ const Dashboard = ({ setAuth, setLoader }) => {
 
     useEffect(() => {
         getName()
+        setTodosChange(false)
         // eslint-disable-next-line
-    }, [])
+    }, [todosChange])
 
     // Log out 
     const logOut = (e) => {
@@ -40,11 +44,12 @@ const Dashboard = ({ setAuth, setLoader }) => {
     return (
         <Fragment>
            <div className='d-flex mt-5 justify-content-around'>
-           <h2>{name} 's Todo List</h2>
+           <h2>{name}'s Todo List</h2>
             <button className='btn btn-primary' onClick={e => logOut(e)}>Log Out</button>
            </div>
            
-            <InputTodo />
+            <InputTodo setTodosChange={setTodosChange} />
+            <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />
         </Fragment>
     )
 }

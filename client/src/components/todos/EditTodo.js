@@ -1,18 +1,23 @@
 import React, { Fragment, useState } from 'react'
 
-const EditTodo = ({ todo }) => {
+const EditTodo = ({ todo, setTodosChange }) => {
     const [description, setDescription] = useState(todo.description)
 
     const updateDescription = async (e) => {
         e.preventDefault()
+
+        const myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
+        myHeaders.append('token', localStorage.token)
         try {
             const body = { description }
-            await fetch(`/todos/${todo.todo_id}`,{ 
+            await fetch(`/dashboard/todos/${todo.todo_id}`,{ 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: myHeaders,
             body: JSON.stringify(body)
             })
-            window.location = '/'
+            setTodosChange(true)
+            // window.location = '/'
         } catch (err) {
             console.error(err.message);
         }
@@ -26,6 +31,7 @@ const EditTodo = ({ todo }) => {
             </button>
 
             <div className="modal" id={`id${todo.todo_id}`} onClick={() => setDescription(todo.description)}>
+
             <div className="modal-dialog">
                 <div className="modal-content">
 
@@ -35,12 +41,13 @@ const EditTodo = ({ todo }) => {
                 </div>
           
                 <div className="modal-body">
-                    <input type='text' className='form-control' value={description} onChange={e => setDescription(e.target.value)} />
+                    <input type='text' className='form-control' value={description || ''} onChange={e => setDescription(e.target.value)} />
                 </div>
 
                 <div className="modal-footer">
                 <button type="button" className="btn btn-warning" data-dismiss="modal" onClick={(e) => updateDescription(e)}>Edit</button>
-                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => setDescription(todo.description)}>Close</button>
+
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => setDescription(todo.description)}>Close</button>
                 </div>
 
                 </div>

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Fragment, useState } from 'react'
 
-const InputTodo = () => {
+const InputTodo = ({ setTodosChange }) => {
     const [description, setDescription] = useState('') 
 
     const onSubmit = async (e) => {
@@ -21,8 +21,10 @@ const InputTodo = () => {
                 body: JSON.stringify(body)
             })
             const data = await res.json()
-            console.log(data);
-            // window.location = '/'
+            // to avoid refreshing setTodosChange to true
+            setTodosChange(true)
+            setDescription('')
+        
         } catch (err) {
             console.error(err.message);
         }
@@ -32,7 +34,7 @@ const InputTodo = () => {
         <Fragment>
             <h1 className='text-center mt-5'>Pern Todo List</h1>
             <form className='d-flex m-5' onSubmit={onSubmit}>
-                <input className='form-control' type='text' placeholder='Add Todo' onChange={e => setDescription(e.target.value)} />
+                <input className='form-control' type='text' placeholder='Add Todo' onChange={e => setDescription(e.target.value)}  value={description} />
                 <button className='btn btn-success ml-3'>Add</button>
             </form>
         </Fragment>

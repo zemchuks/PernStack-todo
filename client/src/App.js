@@ -53,7 +53,7 @@ const App = () => {
         <Router>
          <div className='container'>
            <Switch>
-           <Route exact path='/' render={props => !isAuthenticated ? <Landing {...props} /> : <Redirect to='/dashboard' /> } />
+           <Route exact path='/' render={props => !isAuthenticated ? (<Landing {...props} />) :( <Redirect to='/dashboard' />) } />
 
           <Route exact path='/login' render={props => !isAuthenticated ? <Login {...props} setAuth={setAuth} /> : <Redirect to='/dashboard' /> } />
 
