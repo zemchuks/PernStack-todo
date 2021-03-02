@@ -6,9 +6,11 @@ const EditTodo = ({ todo, setTodosChange }) => {
     const updateDescription = async (e) => {
         e.preventDefault()
 
+        // Headers Constructor
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
         myHeaders.append('token', localStorage.token)
+        
         try {
             const body = { description }
             await fetch(`/dashboard/todos/${todo.todo_id}`,{ 
