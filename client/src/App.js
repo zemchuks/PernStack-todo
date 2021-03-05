@@ -2,13 +2,13 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Dashboard from './components/dashboard/Dashboard'
-import Login from './components/Login'
-import Register from './components/Register'
-import Landing from './components/layout/Landing'
+import Dashboard from './Components/dashboard/Dashboard'
+import Login from './Components/Login'
+import Register from './Components/Register'
+import Landing from './Components/layout/Landing'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Spinner from './components/layout/Spinner'
+import Spinner from './Components/layout/Spinner'
 
 toast.configure()
 
